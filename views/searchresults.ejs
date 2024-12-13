@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            background-image: url("background3.jpg");
+            background-repeat: no-repeat;
+            background-size: 100%;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            -webkit-text-stroke: 1px blue;
+        }
+        .message {
+            color: yellow;
+            text-align: center;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap; /* Allows buttons to wrap to the next line if necessary */
+            justify-content: center; /* Centers the buttons horizontally */
+            gap: 15px; /* Adds space between buttons */
+            padding: 20px; /* Adds space inside the container */
+            flex-direction: column; /* Aligns buttons vertically */
+        }
+
+        .button-container form {
+            margin: 0; /* Ensures no extra margin around forms */
+        }
+
+        .button-container button {
+            background-color: #28a745; /* Custom green color */
+            color: white; /* White text color */
+            border: none; /* Removes default border */
+            border-radius: 8px; /* Rounds the button corners */
+            padding: 10px 20px; /* Adds padding inside the button */
+            font-size: 16px; /* Sets font size */
+            cursor: pointer; /* Changes cursor to pointer on hover */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Adds smooth hover effect */
+        }
+
+        .button-container button:hover {
+            background-color: #218838; /* Darker green on hover */
+            transform: scale(1.05); /* Slightly enlarges the button */
+        }
+
+        .button-container button:active {
+            background-color: #1e7e34; /* Even darker green on click */
+            transform: scale(0.95); /* Slightly shrinks the button when clicked */
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="message">
+        <% if (typeof message !== 'undefined') { %>
+          <p><%= message %></p>
+        <% } %>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
+        <a class="navbar-brand" style="color: rgb(191, 255, 161)">Search Results</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <form method="POST" action='/search' class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" name="Search" type="search" placeholder="Search"
+                    aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="button-container">
+        <% try { %>
+            <% if (array && array.length > 0) { %>
+                <% for (let index = 0; index < array.length; index++) { %>
+                  <form action="/<%= array[index] %>" method="GET">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                      <%= array[index] %>
+                    </button>
+                  </form>
+                <% } %>
+              <% } %>
+        <% } catch(e) { %>
+            <% let array = []; %>
+            <% for (let index = 0; index < array.length; index++) { %>
+                <form action="/<%= array[index] %>" method="GET">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                    <%= array[index] %>
+                </button>
+                </form>
+            <% } %>
+        <% } %>
+    </div>
+</body>
+</html>
